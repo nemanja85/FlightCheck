@@ -1,0 +1,46 @@
+#!/usr/bin/php
+<?php
+
+require_once '../helpers/functions.php';
+require '../config/db.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
+$dotenv->load();
+$title = "Add Flight details";
+
+cli_set_process_title($title);
+
+$code = $argv[1] ?? "";
+if (empty($code)) {
+    error('Code is required');
+}
+
+$city = $argv[2] ?? "";
+if (empty($city)) {
+    error('City is required');
+}
+
+$country = $argv[3] ?? "";
+if (empty($country)) {
+    error('Country is required');
+}
+$pdo = dbConnect($_ENV["DB_HOST"], $_ENV["PORT"], $_ENV["DATABASE"], $_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
+
+
+if ($pdo === null) {
+    error("Connection with database failed!");
+}
+
+require_once '../helpers/queries.php';
+
+$insertData = insertFlightInfo($pdo, $code, $city, $country);
+
+if (!insertFlightInfo($pdo, $code, $city, $country)) {
+    error('You can not add record into table.');
+}
+    info('OK');
+
+
+
+

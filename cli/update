@@ -1,0 +1,42 @@
+#!/usr/bin/php
+<?php
+require_once './../helpers/functions.php';
+require 'config/db.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$title = "Update Flight details";
+
+cli_set_process_title($title);
+
+$id = $argv[1] ?? "";
+if (empty($id)) {
+    error('ID is required');
+}
+
+$code = $argv[2] ?? "";
+if (empty($code)) {
+    error('Code is required');
+}
+
+$city = $argv[3] ?? "";
+if (empty($city)) {
+    error('City is required');
+}
+
+$country = $argv[4] ?? "";
+if (empty($country)) {
+    error('Country is required');
+}
+
+$pdo = dbConnect($_ENV["DB_HOST"], $_ENV["PORT"], $_ENV["DATABASE"], $_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
+
+if ($pdo === null) {
+    error("Connection with database failed!");
+}
+
+require_once "../helpers/queries.php";
+
+$updateData = updateFlightInfo($pdo, $id, $code, $city, $country);

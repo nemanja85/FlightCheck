@@ -1,0 +1,9 @@
+
+/vendor/
+/data/
+node_modules/
+npm-debug.log
+.env
+.phpunit.result.cache
+.idea
+
