@@ -39,7 +39,7 @@ $insertData = insertFlightInfo($pdo, $code, $city, $country);
 if (!insertFlightInfo($pdo, $code, $city, $country)) {
     error('You can not add record into table.');
 }
-    info('OK');
+    info('You are successfully added record in database.');
 
 
 

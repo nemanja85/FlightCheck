@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 require_once './../helpers/functions.php';
-require 'config/db.php';
+require '../config/db.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -25,3 +25,8 @@ if ($pdo === null) {
 require_once "../helpers/queries.php";
 
 $removeData = deleteFlightInfo($pdo, $code);
+
+if(!$removeData){
+    error("Unable to delete flight!");
+}
+    info('Flight deleted successfully!');
