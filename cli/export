@@ -1,0 +1,39 @@
+#!/usr/bin/php
+<?php
+require_once './../helpers/functions.php';
+require '../config/db.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
+$dotenv->load();
+$title = "Export Flight Info";
+
+cli_set_process_title($title);
+
+$format = $argv[1] ?? "";
+    if (empty($format)) {
+        error('Format is required');
+    }
+
+$location = $argv[2] ?? "";
+    if (empty($location)) {
+        error('Location is required');
+    }
+
+$pdo = dbConnect($_ENV["DB_HOST"], $_ENV["PORT"], $_ENV["DATABASE"], $_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
+
+    if ($pdo === null) {
+        error("Connection with database failed!");
+    }
+
+require_once "../helpers/queries.php";
+
+    $data = getFlights($pdo);
+    print_r($data);
+    if (count($data) === 0) {
+        error('Data is empty');
+    }
+
+    if(!in_array($argv[1], ['json', 'csv', 'xml']))  {
+        error('Format is not allowed!');
+    }

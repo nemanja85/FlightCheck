@@ -1,6 +1,6 @@
 <?php
 
-function insertFlightInfo(PDO $conn, string $code, string $city, string $country): bool
+function insertFlightInfo(string $code, string $city, string $country): bool
 {
     try {
         $sql = "INSERT IGNORE INTO filghts(code, city, country) VALUES(:code, :city, :country)";
@@ -47,4 +47,12 @@ function deleteFlightInfo(PDO $conn, string $code): bool
         error($e->getMessage());
     }
 
+}
+
+function getFlights(Pdo $conn):array
+{
+    $sql = "SELECT * FROM filghts";
+    $statement = $conn->prepare($sql);
+    $statement->execute();
+   return $statement->fetchAll(PDO::FETCH_CLASS);
 }
