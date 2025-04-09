@@ -7,7 +7,7 @@ services:
     restart: always
     ports:
       # <Port exposed> : < MySQL Port running inside container>
-      - "3300:3306"
+      - "3306:3306"
     volumes:
       - ./data/db:/var/lib/mysql
     environment:
@@ -21,6 +21,6 @@ services:
     container_name: "dev_phpmyadmin"
     restart: always
     ports:
-      - "3306:3306"                  #
+      - "7070:3306"                  #
 volumes:
   db_data:
