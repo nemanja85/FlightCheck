@@ -22,8 +22,8 @@ $filePath = $argv[2] ?? "";
 
 $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 
-if(!in_array($fileExtension, ["csv", "xls", "xlsx"])){
-    error('Invalid file extension! Please use one of csv, xls, xlsx extensions!');
+if(!in_array($fileExtension, ["csv", "xls", "json"])){
+    error('Invalid file extension! Please use one of csv, xls, json extensions!');
 }
 
 $pdo = dbConnect($_ENV["DB_HOST"], $_ENV["PORT"], $_ENV["DATABASE"], $_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
