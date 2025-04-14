@@ -1,16 +1,11 @@
 <?php
-function dbConnect(string $host, int $port, string $db, string $user, string $password, string $charset = "UTF8"): ?PDO
+function dbConnect(string $db): ?PDO
 {
-    $dsn = "mysql:host=%s;dbname=%s;charset=%s;port=%d";
-
     try {
-        return new PDO(sprintf($dsn, $host, $db, $charset, $port), $user, $password, [
-            PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
+        $dir = 'sqlite://home/nemanja/Code/personal/FlightCheck/analytics.sqlite';
+        return new PDO($dir);
     } catch (PDOException $exception) {
-        //dd($exception->getMessage());
+        dd($exception->getMessage());
         return null;
     }
 }

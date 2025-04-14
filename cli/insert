@@ -25,7 +25,7 @@ $country = $argv[3] ?? "";
 if (empty($country)) {
     error('Country is required');
 }
-$pdo = dbConnect($_ENV["DB_HOST"], $_ENV["PORT"], $_ENV["DATABASE"], $_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
+$pdo = dbConnect($_ENV["DB_HOST"]);
 
 
 if ($pdo === null) {
@@ -33,8 +33,6 @@ if ($pdo === null) {
 }
 
 require_once '../helpers/queries.php';
-
-$insertData = insertFlightInfo($pdo, $code, $city, $country);
 
 if (!insertFlightInfo($pdo, $code, $city, $country)) {
     error('You can not add record into table.');

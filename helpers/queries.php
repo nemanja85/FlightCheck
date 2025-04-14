@@ -1,9 +1,9 @@
 <?php
 
-function insertFlightInfo(string $code, string $city, string $country): bool
+function insertFlightInfo(PDO $conn, string $code, string $city, string $country): bool
 {
     try {
-        $sql = "INSERT IGNORE INTO filghts(code, city, country) VALUES(:code, :city, :country)";
+        $sql = "INSERT INTO flights(id, code, city, country) VALUES(null,:code, :city, :country)";
 
         $statement = $conn->prepare($sql);
         return $statement->execute([
@@ -38,15 +38,17 @@ function updateFlightInfo(PDO $conn, int $id, string $code, string $city, string
 function deleteFlightInfo(PDO $conn, string $code): bool
 {
     try {
-        $sql = "DELETE FROM filghts WHERE $code = :code";
+        $sql = "DELETE FROM flights WHERE code = :code";
 
         $statement = $conn->prepare($sql);
         $statement->bindParam(':code', $code);
-        return $statement->execute();
+        $statement->execute();
+        return $statement->rowCount() > 0;
     } catch (PDOException $e){
-        error($e->getMessage());
+//        error($e->getMessage());
+        var_dump($e->getMessage());
+        return false;
     }
-
 }
 
 function getFlights(Pdo $conn):array

@@ -1,26 +1,20 @@
-version: '3.8'
-
 services:
-  mysql:
-    image: mysql:latest
-    container_name: dev_mysql
+  mariadb:
+    image: 'mariadb:11'
+    user: ${UID}:${GID}w
     restart: always
     ports:
-      # <Port exposed> : < MySQL Port running inside container>
-      - "3306:3306"
-    volumes:
-      - ./data/db:/var/lib/mysql
+      - '${FORWARD_DB_PORT:-3306}:3306'
     environment:
-      MYSQL_DATABASE: "db"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "root"
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: "dev_phpmyadmin"
-    restart: always
-    ports:
-      - "7070:3306"                  #
-volumes:
-  db_data:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ROOT_HOST: "localhost"
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'username'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - './data:/var/lib/mysql'
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      retries: 3
+      timeout: 5s

@@ -36,3 +36,6 @@ To install FlightCheck, follow these steps:
 
 
 Give a ⭐️ if this project helped you!
+
+--
+pristup bazi SQLLite 3
