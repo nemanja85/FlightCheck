@@ -1,15 +1,4 @@
 <?php
-// This file walks you through the most common features of PHP's SQLite3 API.
-// The code is runnable in its entirety and results in an `analytics.sqlite` file.
-
-
-// Create a new database, if the file doesn't exist and open it for reading/writing.
-// The extension of the file is arbitrary.
-$db = new SQLite3('analytics.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
-
-// Errors are emitted as warnings by default, enable proper error handling.
-$db->enableExceptions(true);
-
 
 // Create a table.
 
@@ -22,12 +11,7 @@ $db->query('CREATE TABLE IF NOT EXISTS "visits" (
 
 
 // Insert some sample data.
-//
-// INSERTs may seem very slow in SQLite, which happens when not using transactions.
-// It's advisable to wrap related queries in a transaction (BEGIN and COMMIT),
-// even if you don't care about atomicity.
-// If you don't do this, SQLite automatically wraps every single query
-// in a transaction, which slows everything down immensely.
+
 
 $db->exec('BEGIN');
 $db->query('INSERT INTO "visits" ("user_id", "url", "time")
@@ -69,15 +53,6 @@ echo("\n");
 // free the memory, this in NOT done automatically, while your script is running
 $result->finalize();
 
-
-// A useful shorthand for fetching a single row as an associative array.
-// The second parameter means we want all the selected columns.
-//
-// Watch out, this shorthand doesn't support parameter binding, but you can
-// escape the strings instead.
-// Always put the values in SINGLE quotes! Double quotes are used for table
-// and column names (similar to backticks in MySQL).
-
 $query = 'SELECT * FROM "visits" WHERE "url" = \'' .
     SQLite3::escapeString('/test') .
     '\' ORDER BY "id" DESC LIMIT 1';
@@ -96,8 +71,5 @@ $userCount = $db->querySingle('SELECT COUNT(DISTINCT "user_id") FROM "visits"');
 echo("User count: $userCount\n");
 echo("\n");
 
-
-// Finally, close the database.
-// This is done automatically when the script finishes, though.
 
 $db->close();
