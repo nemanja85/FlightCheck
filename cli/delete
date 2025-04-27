@@ -27,6 +27,6 @@ require_once "../helpers/queries.php";
 $removeData = deleteFlightInfo($pdo, $code);
 
 if(!$removeData){
-    error("Unable to delete flight!");
+    error("Unable to delete flight with code: $code");
 }
-    info('Flight deleted successfully!');
+    info("Flight with code $code deleted successfully!");
