@@ -45,8 +45,7 @@ function deleteFlightInfo(PDO $conn, string $code): bool
         $statement->execute();
         return $statement->rowCount() > 0;
     } catch (PDOException $e){
-//        error($e->getMessage());
-        var_dump($e->getMessage());
+        dump($e->getMessage());
         return false;
     }
 }
