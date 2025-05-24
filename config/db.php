@@ -6,7 +6,6 @@ function dbConnect(string $db): ?PDO
         return new PDO($dir);
     } catch (PDOException $exception) {
         dd($exception->getMessage());
-        return null;
     }
 }
 
