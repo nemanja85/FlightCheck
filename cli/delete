@@ -16,7 +16,7 @@ if (empty($code)) {
     error('Code is required');
 }
 
-$pdo = dbConnect($_ENV["DB_HOST"]);
+$pdo = dbConnect(DB_PATH);
 
 if ($pdo === null) {
     error("Connection with database failed!");

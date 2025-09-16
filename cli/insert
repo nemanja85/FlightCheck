@@ -25,8 +25,7 @@ $country = $argv[3] ?? "";
 if (empty($country)) {
     error('Country is required');
 }
-$pdo = dbConnect($_ENV["DB_HOST"]);
-
+$pdo = dbConnect(DB_PATH);
 
 if ($pdo === null) {
     error("Connection with database failed!");

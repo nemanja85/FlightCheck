@@ -20,7 +20,7 @@ $location = $argv[2] ?? "";
         error('Location is required');
     }
 
-$pdo = dbConnect($_ENV["DB_HOST"], $_ENV["PORT"], $_ENV["DATABASE"], $_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
+$pdo = dbConnect(DB_PATH);
 
     if ($pdo === null) {
         error("Connection with database failed!");
